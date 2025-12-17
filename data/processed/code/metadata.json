@@ -1,0 +1,12 @@
+{
+  "domain": "code",
+  "total_samples": 44884,
+  "train_samples": 31418,
+  "val_samples": 6732,
+  "test_samples": 6734,
+  "train_ratio": 0.7,
+  "val_ratio": 0.15,
+  "test_ratio": 0.15,
+  "seed": 42,
+  "source_file": "./data/raw\\python_code.jsonl"
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "research",
+  "total_samples": 30000,
+  "train_samples": 21000,
+  "val_samples": 4500,
+  "test_samples": 4500,
+  "train_ratio": 0.7,
+  "val_ratio": 0.15,
+  "test_ratio": 0.15,
+  "seed": 42,
+  "source_file": "./data/raw\\arxiv_ml_papers.jsonl"
+}

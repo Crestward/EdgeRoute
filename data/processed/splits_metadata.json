@@ -1,0 +1,46 @@
+{
+  "domains": {
+    "code": {
+      "domain": "code",
+      "total_samples": 44884,
+      "train_samples": 31418,
+      "val_samples": 6732,
+      "test_samples": 6734,
+      "train_ratio": 0.7,
+      "val_ratio": 0.15,
+      "test_ratio": 0.15,
+      "seed": 42,
+      "source_file": "./data/raw\\python_code.jsonl"
+    },
+    "general": {
+      "domain": "general",
+      "total_samples": 50000,
+      "train_samples": 35000,
+      "val_samples": 7500,
+      "test_samples": 7500,
+      "train_ratio": 0.7,
+      "val_ratio": 0.15,
+      "test_ratio": 0.15,
+      "seed": 42,
+      "source_file": "./data/raw\\wikipedia.jsonl"
+    },
+    "research": {
+      "domain": "research",
+      "total_samples": 30000,
+      "train_samples": 21000,
+      "val_samples": 4500,
+      "test_samples": 4500,
+      "train_ratio": 0.7,
+      "val_ratio": 0.15,
+      "test_ratio": 0.15,
+      "seed": 42,
+      "source_file": "./data/raw\\arxiv_ml_papers.jsonl"
+    }
+  },
+  "totals": {
+    "train": 87418,
+    "val": 18732,
+    "test": 18734,
+    "total": 124884
+  }
+}
