@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 import torch
 import json
 import argparse
-from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer
+from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer, DataCollatorForLanguageModeling
 from datasets import Dataset
 from peft import LoraConfig, get_peft_model, TaskType
 from datetime import datetime
@@ -38,9 +38,9 @@ def tokenize_function(examples, tokenizer, max_length=512):
         examples['text'],
         truncation=True,
         max_length=max_length,
-        padding=False
+        padding=False  # DataCollator will handle padding
     )
-    tokenized['labels'] = tokenized['input_ids'].copy()
+    # Don't add labels here - DataCollatorForLanguageModeling will handle it
     return tokenized
 
 
@@ -137,12 +137,19 @@ def main():
         resume_from_checkpoint=True  # Auto-resume if checkpoint exists
     )
 
+    # Data collator for dynamic padding
+    data_collator = DataCollatorForLanguageModeling(
+        tokenizer=tokenizer,
+        mlm=False  # We're doing causal LM, not masked LM
+    )
+
     # Trainer
     trainer = Trainer(
         model=model,
         args=training_args,
         train_dataset=train_dataset,
-        eval_dataset=val_dataset
+        eval_dataset=val_dataset,
+        data_collator=data_collator
     )
 
     # Train
