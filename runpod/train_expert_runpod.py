@@ -133,8 +133,7 @@ def main():
         bf16=True,
         dataloader_num_workers=4,
         remove_unused_columns=False,
-        report_to="none",
-        resume_from_checkpoint=True  # Auto-resume if checkpoint exists
+        report_to="none"
     )
 
     # Data collator for dynamic padding
@@ -152,14 +151,33 @@ def main():
         data_collator=data_collator
     )
 
+    # Check for existing checkpoints
+    print("\n5. Checking for existing checkpoints...")
+    checkpoint_dir = None
+    if os.path.exists(args.output_dir):
+        checkpoints = [d for d in os.listdir(args.output_dir) if d.startswith('checkpoint-')]
+        if checkpoints:
+            # Get latest checkpoint by number
+            checkpoints = sorted(checkpoints, key=lambda x: int(x.split('-')[1]))
+            checkpoint_dir = os.path.join(args.output_dir, checkpoints[-1])
+            print(f"Found checkpoint: {checkpoint_dir}")
+            print("Resuming from checkpoint...")
+        else:
+            print("No checkpoints found. Starting from scratch.")
+    else:
+        print("No output directory found. Starting from scratch.")
+
     # Train
-    print("\n5. Starting training...")
+    print("\n6. Starting training...")
     print("=" * 70)
 
-    trainer.train()
+    if checkpoint_dir:
+        trainer.train(resume_from_checkpoint=checkpoint_dir)
+    else:
+        trainer.train()
 
     # Save
-    print("\n6. Saving model...")
+    print("\n7. Saving model...")
     model.save_pretrained(args.output_dir)
     tokenizer.save_pretrained(args.output_dir)
 
