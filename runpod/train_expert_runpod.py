@@ -130,6 +130,7 @@ def main():
         save_strategy="steps",  # Save every N steps for crash protection
         save_steps=300,  # Save every 300 steps (~10-15 min on GPU)
         save_total_limit=3,  # Keep last 3 checkpoints
+        save_safetensors=True,  # Use safetensors instead of pickle (safer + faster)
         bf16=True,
         dataloader_num_workers=4,
         remove_unused_columns=False,
