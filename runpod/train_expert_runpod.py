@@ -126,12 +126,10 @@ def main():
         lr_scheduler_type="cosine",
         warmup_steps=100,
         logging_steps=50,
-        eval_strategy="epoch",
-        save_strategy="steps",  # Changed from "epoch" to "steps"
+        eval_strategy="epoch",  # Eval at end of each epoch
+        save_strategy="steps",  # Save every N steps for crash protection
         save_steps=300,  # Save every 300 steps (~10-15 min on GPU)
         save_total_limit=3,  # Keep last 3 checkpoints
-        load_best_model_at_end=True,
-        metric_for_best_model="loss",
         bf16=True,
         dataloader_num_workers=4,
         remove_unused_columns=False,
